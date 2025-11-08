@@ -1,32 +1,32 @@
-# DT.TestInfrastructure
+п»ї# DT.TestInfrastructure
 
-## Описание
+## РћРїРёСЃР°РЅРёРµ
 
-Библиотека с Testcontainers для интеграционных тестов.
+Р‘РёР±Р»РёРѕС‚РµРєР° СЃ Testcontainers РґР»СЏ РёРЅС‚РµРіСЂР°С†РёРѕРЅРЅС‹С… С‚РµСЃС‚РѕРІ.
 
-## Пример использования
+## РџСЂРёРјРµСЂ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ
 
-В проект с тестами внедрить зависимость:
+Р’ РїСЂРѕРµРєС‚ СЃ С‚РµСЃС‚Р°РјРё РІРЅРµРґСЂРёС‚СЊ Р·Р°РІРёСЃРёРјРѕСЃС‚СЊ:
 
 ```xml
 <ProjectReference Include="..\..\..\DT.TestInfrastructure\DT.TestInfrastructure\DT.TestInfrastructure.csproj" />
 ```
 
-В проекте тестов создать Fixture и коллекцию тестов
+Р’ РїСЂРѕРµРєС‚Рµ С‚РµСЃС‚РѕРІ СЃРѕР·РґР°С‚СЊ Fixture Рё РєРѕР»Р»РµРєС†РёСЋ С‚РµСЃС‚РѕРІ
 
-Определение коллекции:
+РћРїСЂРµРґРµР»РµРЅРёРµ РєРѕР»Р»РµРєС†РёРё:
 ```csharp
 [CollectionDefinition(nameof(OrgUsersServiceCollection))]
 public class OrgUsersServiceCollection : ICollectionFixture<SharedTestContainerFixture>;
 ```
 
-Создать базовый клас, для провайдера
+РЎРѕР·РґР°С‚СЊ Р±Р°Р·РѕРІС‹Р№ РєР»Р°СЃ, РґР»СЏ РїСЂРѕРІР°Р№РґРµСЂР°
 ```csharp
 [Collection(nameof(OrgUsersServiceCollection))]
     public abstract class OrgUsersServiceTestsBase : IAsyncLifetime
     {
         private readonly string ConnectionString;
-        //public IHost Host { get; private set; } = default!;
+        
         public IServiceProvider ServiceProvider { get; }
 
         protected OrgUsersServiceTestsBase(SharedTestContainerFixture fixture)
@@ -52,7 +52,7 @@ public class OrgUsersServiceCollection : ICollectionFixture<SharedTestContainerF
     }
 ```
 
-Интеграционные тесты наследовать от базового класса
+РРЅС‚РµРіСЂР°С†РёРѕРЅРЅС‹Рµ С‚РµСЃС‚С‹ РЅР°СЃР»РµРґРѕРІР°С‚СЊ РѕС‚ Р±Р°Р·РѕРІРѕРіРѕ РєР»Р°СЃСЃР°
 ```csharp
  public class UserRepositoryTests : OrgUsersServiceTestsBase
     {
