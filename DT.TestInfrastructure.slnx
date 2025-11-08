@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/Элементы решения/">
+    <File Path="CHANGELOG.md" />
+    <File Path="LICENSE.md" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="DT.TestInfrastructure/DT.TestInfrastructure.csproj" />
+</Solution>
