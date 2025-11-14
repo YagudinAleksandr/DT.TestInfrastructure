@@ -1,0 +1,39 @@
+﻿name: Publish to GitHub Packages
+
+on:
+  push:
+    tags: [ 'v*.*.*' ]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Restore
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore -c Release
+
+    - name: Test
+      run: dotnet test --no-build -c Release
+
+    - name: Pack Implementation
+      run: dotnet pack DT.TestInfrastructure/DT.TestInfrastructure.csproj -c Release --no-build -o ./nupkg
+
+    - name: Publish to GitHub Packages
+      run: |
+        dotnet nuget push ./nupkg/*.nupkg \
+          --source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json \
+          --api-key ${{ secrets.GITHUB_TOKEN }} \
+          --skip-duplicate
