@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
@@ -10,17 +10,19 @@
 		<RepositoryUrl>https://github.com/YagudinAleksandr/DT.TestInfrastructure</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<Version>0.1.1</Version>
+		<Version>0.1.2</Version>
 		<IsPackable>true</IsPackable>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="coverlet.collector" Version="6.0.0" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+		<PackageReference Include="StackExchange.Redis" Version="2.10.1" />
+		<PackageReference Include="Testcontainers.Redis" Version="4.9.0" />
 		<PackageReference Include="xunit" Version="2.5.3" />
 		<PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
-		<PackageReference Include="Testcontainers" Version="4.8.1" />
-		<PackageReference Include="Testcontainers.PostgreSql" Version="4.8.1" />
+		<PackageReference Include="Testcontainers" Version="4.9.0" />
+		<PackageReference Include="Testcontainers.PostgreSql" Version="4.9.0" />
 		<PackageReference Include="Npgsql" Version="8.0.3" />
 	</ItemGroup>
 
