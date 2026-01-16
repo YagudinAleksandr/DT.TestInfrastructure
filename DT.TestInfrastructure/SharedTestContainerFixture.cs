@@ -1,3 +1,5 @@
+using DotNet.Testcontainers.Builders;
+using StackExchange.Redis;
 using Testcontainers.PostgreSql;
 using Testcontainers.Redis;
 
@@ -19,9 +21,20 @@ namespace DT.TestInfrastructure
         private RedisContainer? _redisContainer;
 
         /// <summary>
+        /// Контейнер PostgreSQL + PostGIS
+        /// </summary>
+        private PostgreSqlContainer? _containerGis;
+
+        /// <summary>
         /// Строка подклбчения к базе данных
         /// </summary>
         public string ConnectionString => _container?.GetConnectionString()
+            ?? throw new InvalidOperationException("Container not initialized.");
+
+        /// <summary>
+        /// Строка подключения к базе данных с PostGIS
+        /// </summary>
+        public string ConnectionStringGis => _containerGis?.GetConnectionString()
             ?? throw new InvalidOperationException("Container not initialized.");
 
         /// <summary>
@@ -42,6 +55,14 @@ namespace DT.TestInfrastructure
                 .WithCleanUp(true)
                 .Build();
 
+            _containerGis = new PostgreSqlBuilder()
+                .WithPortBinding(5433)
+                .WithDatabase("testdbgis")
+                .WithUsername("postgres")
+                .WithPassword("postgres")
+                .WithCleanUp(true)
+                .Build();
+
             // Запуск Redis
             _redisContainer = new RedisBuilder()
                 .WithCleanUp(true)
@@ -50,6 +71,7 @@ namespace DT.TestInfrastructure
             // Запускаем оба параллельно для ускорения
             await Task.WhenAll(
                 _container.StartAsync(),
+                _containerGis.StartAsync(),
                 _redisContainer.StartAsync()
             );
         }
@@ -64,6 +86,9 @@ namespace DT.TestInfrastructure
 
             if (_redisContainer != null)
                 tasks.Add(_redisContainer.DisposeAsync().AsTask());
+
+            if (_containerGis != null)
+                tasks.Add(_containerGis.DisposeAsync().AsTask());
 
             if (tasks.Count > 0)
                 await Task.WhenAll(tasks);
