@@ -1,6 +1,10 @@
 ﻿# Changelog
 
-## [0.2.0](https://github.com/YagudinAleksandr/DT.TestInfrastructure/tree/0.2.0) - 17.01.2026
+## [0.2.1](https://github.com/YagudinAleksandr/DT.TestInfrastructure/tree/v.0.2.1) - 17.01.2026
+### Fixed
+- Исправлен контейнер для PostGIS
+
+## [0.2.0](https://github.com/YagudinAleksandr/DT.TestInfrastructure/tree/v.0.2.0) - 17.01.2026
 ### Added
 - Добавлен контейнер для PostgGIS
 
