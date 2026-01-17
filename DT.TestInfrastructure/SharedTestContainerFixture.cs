@@ -56,7 +56,7 @@ namespace DT.TestInfrastructure
                 .Build();
 
             _containerGis = new PostgreSqlBuilder()
-                .WithPortBinding(5433)
+                .WithImage("postgis/postgis:15-3.4")
                 .WithDatabase("testdbgis")
                 .WithUsername("postgres")
                 .WithPassword("postgres")
